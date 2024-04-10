@@ -45,10 +45,10 @@ public class Ksiazka implements Serializable {
     }
 
     public String nieOddane(){
-        StringBuilder response = new StringBuilder(STR."\{tytul} od \{autor} ");
+        StringBuilder response = new StringBuilder(tytul + " od " + autor);
         int count = 0;
         for (Wyporzyczenie wyporzyczenie : rejestr) if (!wyporzyczenie.czyOddana()) {
-                response.append(STR."nie został zwrócony przez \{wyporzyczenie.getKto()} z dnia \{wyporzyczenie.getDataW()}");
+                response.append("nie został zwrócony przez ").append(wyporzyczenie.getKto()).append(" z dnia ").append(wyporzyczenie.getDataW());
                 count++;
             }
         return count == 0 ? response.append("został w całości zwrócony").toString() : response.toString();

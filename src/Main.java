@@ -38,7 +38,7 @@ public class Main {
                                     }
                                     case 3 -> {
                                         StringBuilder response = new StringBuilder();
-                                        ksiazki.stream().map(ksiazka -> STR."\{ksiazka.nieOddane()}\n").forEach(response::append);
+                                        ksiazki.forEach(ksiazka -> response.append(ksiazka.nieOddane()).append("\n"));
                                         printWriter.println(response);
                                     }
                                     case 4 -> {
@@ -53,13 +53,13 @@ public class Main {
                                     }
                                     case 6 -> {
                                         StringBuilder lista = new StringBuilder();
-                                        ksiazki.stream().map(ksiazka -> STR."\{ksiazki.indexOf(ksiazka)}, \{ksiazka.getAutor()}, \{ksiazka.getTytul()}, \{ksiazka.getData()}\n").forEach(lista::append);
+                                        ksiazki.stream().map(ksiazka -> lista.append(ksiazki.indexOf(ksiazka)).append(", ").append(ksiazka.getAutor()).append(", ").append(ksiazka.getTytul()).append(", ").append(ksiazka.getData()).append("\n")).forEach(lista::append);
                                         printWriter.println(lista);
                                     }
                                     default -> System.out.println("Nieznana opcja");
                                 }
                             } catch (IOException | ClassNotFoundException e) {
-                                System.out.println(STR."Błąd: \{e}");
+                                System.out.println("Błąd: " + e);
                             }
                         }
 
@@ -67,7 +67,7 @@ public class Main {
                     });
                     pisarz.start();
                 } catch (IOException e) {
-                    System.out.println(STR."Błąd: \{e}");
+                    System.out.println("Błąd: " + e);
                 }
             });
             pisarze.start();
@@ -89,7 +89,7 @@ public class Main {
                                     case 0 -> poloczony = false;
                                     case 1 -> {
                                         StringBuilder lista = new StringBuilder();
-                                        for (Ksiazka ksiazka : ksiazki) if (ksiazka.szukaj(bufferedReader.readLine())) lista.append(STR."\{ksiazki.indexOf(ksiazka)}, \{ksiazka.getAutor()}, \{ksiazka.getTytul()}, \{ksiazka.getData()}\n");
+                                        for (Ksiazka ksiazka : ksiazki) if (ksiazka.szukaj(bufferedReader.readLine())) lista.append(ksiazki.indexOf(ksiazka)).append(", ").append(ksiazka.getAutor()).append(", ").append(ksiazka.getTytul()).append(", ").append(ksiazka.getData()).append("\n");
                                         printWriter.println(lista);
                                     }
                                     case 2 -> {
@@ -97,7 +97,7 @@ public class Main {
                                         int index = bufferedReader.read();
                                         int indexW = ksiazki.get(index).wyporzycz(bufferedReader.readLine(), bufferedReader.readLine());
                                         objectOutputStream.writeObject(ksiazki.get(index));
-                                        printWriter.println(STR."Index wyporzyczenia to: \{indexW}");
+                                        printWriter.println("Index wyporzyczenia to: " + indexW);
                                     }
                                     case 3 -> {
                                         printWriter.println("Podaj indeks książki, indeks wyporzyczenia oraz datę");
@@ -107,7 +107,7 @@ public class Main {
                                     default -> System.out.println("Nieznana opcja");
                                 }
                             } catch (IOException e){
-                                System.out.println(STR."Błąd: \{e}");
+                                System.out.println("Błąd: " + e);
                             }
                         }
 
@@ -115,12 +115,12 @@ public class Main {
                     });
                     czytelnik.start();
                 } catch (IOException e) {
-                    System.out.println(STR."Błąd: \{e}");
+                    System.out.println("Błąd: " + e);
                 }
             });
             czytelnicy.start();
         } catch (IOException e){
-            System.out.println(STR."Błąd: \{e}");
+            System.out.println("Błąd: " + e);
         }
     }
 }
