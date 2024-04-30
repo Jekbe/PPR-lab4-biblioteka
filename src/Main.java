@@ -8,8 +8,8 @@ public class Main {
     private static final List<Ksiazka> ksiazki = new ArrayList<>();
 
     public static void main(String[] args) {
-        try (ServerSocket pisarzSocket = new ServerSocket(8001);
-             ServerSocket czytelnikSocket = new ServerSocket(8002)){
+        try(ServerSocket pisarzSocket = new ServerSocket(8001);
+            ServerSocket czytelnikSocket = new ServerSocket(8002)){
             Thread pisarze = new Thread(() -> {
                 while (true) try (Socket socket = pisarzSocket.accept();
                                   BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -58,7 +58,7 @@ public class Main {
                                     }
                                     default -> System.out.println("Nieznana opcja");
                                 }
-                            } catch (IOException | ClassNotFoundException e) {
+                            } catch(IOException | ClassNotFoundException e) {
                                 System.out.println("Błąd: " + e);
                             }
                         }
@@ -66,7 +66,7 @@ public class Main {
                         printWriter.println("Połączenie przerwane przez użytkownika. Do widzenia");
                     });
                     pisarz.start();
-                } catch (IOException e) {
+                } catch(IOException e) {
                     System.out.println("Błąd: " + e);
                 }
             });
@@ -95,9 +95,9 @@ public class Main {
                                     case 2 -> {
                                         printWriter.println("Podaj indeks, swoje dane oraz dzisiejszą datę");
                                         int index = bufferedReader.read();
-                                        int indexW = ksiazki.get(index).wyporzycz(bufferedReader.readLine(), bufferedReader.readLine());
+                                        ksiazki.get(index).wyporzycz(bufferedReader.readLine(), bufferedReader.readLine());
                                         objectOutputStream.writeObject(ksiazki.get(index));
-                                        printWriter.println("Index wyporzyczenia to: " + indexW);
+                                        printWriter.println("Index wyporzyczenia to: " + ksiazki.get(index).getIndexW());
                                     }
                                     case 3 -> {
                                         printWriter.println("Podaj indeks książki, indeks wyporzyczenia oraz datę");
@@ -106,7 +106,7 @@ public class Main {
                                     }
                                     default -> System.out.println("Nieznana opcja");
                                 }
-                            } catch (IOException e){
+                            } catch(IOException e){
                                 System.out.println("Błąd: " + e);
                             }
                         }
@@ -114,12 +114,12 @@ public class Main {
                         printWriter.println("Połączenie przerwane przez użytkownika. Do widzenia");
                     });
                     czytelnik.start();
-                } catch (IOException e) {
+                } catch(IOException e) {
                     System.out.println("Błąd: " + e);
                 }
             });
             czytelnicy.start();
-        } catch (IOException e){
+        } catch(IOException e){
             System.out.println("Błąd: " + e);
         }
     }

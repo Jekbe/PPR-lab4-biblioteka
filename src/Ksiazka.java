@@ -35,8 +35,11 @@ public class Ksiazka implements Serializable {
         zablokowana = !zablokowana;
     }
 
-    public int wyporzycz(String kto, String data){
+    public void wyporzycz(String kto, String data){
         rejestr.add(new Wyporzyczenie(kto, data));
+    }
+
+    public int getIndexW() {
         return rejestr.size() - 1;
     }
 
