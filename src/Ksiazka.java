@@ -1,8 +1,12 @@
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Ksiazka implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String autor, tytul, tresc;
     private final String data;
     private boolean zablokowana = false;
