@@ -7,6 +7,7 @@ import java.util.List;
 public class Main {
     private static final List<Ksiazka> ksiazki = new ArrayList<>();
     private static PrintWriter printWriter;
+    private static ObjectOutputStream objectOutputStream;
 
     public static void main(String[] args) {
         ServerSocket pisarzSocket, czytelnikSocket;
@@ -104,7 +105,7 @@ public class Main {
                     try {
                         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                         printWriter = new PrintWriter(socket.getOutputStream(), true);
-                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
 
                         System.out.println("Witamy nowego czytelnika");
                         print("Witamy nowego czytelnika");
@@ -126,7 +127,7 @@ public class Main {
                                         print("Podaj indeks, swoje dane oraz dzisiejszą datę");
                                         int index = bufferedReader.read();
                                         ksiazki.get(index).wyporzycz(bufferedReader.readLine(), bufferedReader.readLine());
-                                        objectOutputStream.writeObject(ksiazki.get(index));
+                                        outObject(ksiazki.get(index));
                                         print("Index wyporzyczenia to: " + ksiazki.get(index).getIndexW());
                                     }
                                     case 3 -> {
@@ -156,5 +157,10 @@ public class Main {
     private static void print(String s){
         printWriter.println(s);
         printWriter.flush();
+    }
+
+    private static void outObject(Object object) throws IOException {
+        objectOutputStream.writeObject(object);
+        objectOutputStream.flush();
     }
 }
